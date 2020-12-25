@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --board "/ti/boards/CC1352R1_LAUNCHXL" --product "simplelink_cc13x2_26x2_sdk@4.20.00.35"
- * @versions {"data":"2020052512","timestamp":"2020052512","tool":"1.5.0+1397","templates":"2020052512"}
+ * @cliArgs --board "/ti/boards/CC1352R1_LAUNCHXL" --product "simplelink_cc13x2_26x2_sdk@4.30.00.54"
+ * @versions {"data":"2020090214","timestamp":"2020090214","tool":"1.6.0+1543","templates":"2020090214"}
  */
 
 /**
@@ -15,8 +15,8 @@ const GPIO1     = GPIO.addInstance();
 const GPIO2     = GPIO.addInstance();
 const GPIO3     = GPIO.addInstance();
 const GPIO4     = GPIO.addInstance();
-const I2C       = scripting.addModule("/ti/drivers/I2C", {}, false);
-const I2C1      = I2C.addInstance();
+const NVS       = scripting.addModule("/ti/drivers/NVS", {}, false);
+const NVS1      = NVS.addInstance();
 const Power     = scripting.addModule("/ti/drivers/Power");
 const SPI       = scripting.addModule("/ti/drivers/SPI", {}, false);
 const SPI1      = SPI.addInstance();
@@ -24,6 +24,7 @@ const TRNG      = scripting.addModule("/ti/drivers/TRNG", {}, false);
 const TRNG1     = TRNG.addInstance();
 const UART      = scripting.addModule("/ti/drivers/UART", {}, false);
 const UART1     = UART.addInstance();
+const UART2     = UART.addInstance();
 const Watchdog  = scripting.addModule("/ti/drivers/Watchdog", {}, false);
 const Watchdog1 = Watchdog.addInstance();
 
@@ -39,8 +40,8 @@ CCFG.ccfgTemplate.$name       = "ti_devices_CCFGTemplate0";
 
 custom.prop8                                                      = ["custom868"];
 custom.radioConfigcustom868.$name                                 = "ti_devices_radioconfig_settings_prop0";
-custom.radioConfigcustom868.phyType868                            = "2gfsk50kbps154g";
-custom.radioConfigcustom868.carrierFrequency                      = 863.0000;
+custom.radioConfigcustom868.phyType868                            = "2gfsk200kbps154g";
+custom.radioConfigcustom868.carrierFrequency                      = 868.0000;
 custom.radioConfigcustom868.codeExportConfig.$name                = "ti_devices_radioconfig_code_export_param0";
 custom.radioConfigcustom868.codeExportConfig.symGenMethod         = "Custom";
 custom.radioConfigcustom868.codeExportConfig.cmdPropRadioDivSetup = "rf_cmd_prop_radio_div_setup";
@@ -48,6 +49,7 @@ custom.radioConfigcustom868.codeExportConfig.cmdFs                = "rf_cmd_prop
 custom.radioConfigcustom868.codeExportConfig.cmdPropTxAdv         = "rf_cmd_prop_tx_adv";
 custom.radioConfigcustom868.codeExportConfig.cmdPropRxAdv         = "rf_cmd_prop_rx_adv";
 custom.radioConfigcustom868.codeExportConfig.rfMode               = "rf_prop_mode";
+custom.radioConfigcustom868.codeExportConfig.overrides            = "rf_prop_overrides";
 
 GPIO1.$hardware         = system.deviceData.board.components.LED_RED;
 GPIO1.$name             = "CONFIG_GPIO_R";
@@ -65,9 +67,8 @@ GPIO4.$hardware         = system.deviceData.board.components["BTN-2"];
 GPIO4.$name             = "CONFIG_GPIO_BTN_R";
 GPIO4.pinInstance.$name = "CONFIG_PIN_5";
 
-I2C1.$name                = "CONFIG_I2C_0";
-I2C1.sdaPinInstance.$name = "CONFIG_PIN_11";
-I2C1.clkPinInstance.$name = "CONFIG_PIN_12";
+NVS1.$name               = "CONFIG_NVS";
+NVS1.internalFlash.$name = "ti_drivers_nvs_NVSCC26XX0";
 
 SPI1.$name                 = "CONFIG_SPI_0";
 SPI1.$hardware             = system.deviceData.board.components.LP_SPI;
@@ -81,6 +82,16 @@ UART1.$name               = "CONFIG_UART_0";
 UART1.$hardware           = system.deviceData.board.components.XDS110UART;
 UART1.txPinInstance.$name = "CONFIG_PIN_0";
 UART1.rxPinInstance.$name = "CONFIG_PIN_1";
+UART1.uart.$assign        = "UART0";
+UART1.uart.txPin.$assign  = "boosterpack.4";
+UART1.uart.rxPin.$assign  = "boosterpack.3";
+
+UART2.$name               = "CONFIG_UART_1";
+UART2.uart.$assign        = "UART1";
+UART2.uart.txPin.$assign  = "boosterpack.32";
+UART2.uart.rxPin.$assign  = "boosterpack.31";
+UART2.txPinInstance.$name = "CONFIG_PIN_9";
+UART2.rxPinInstance.$name = "CONFIG_PIN_10";
 
 Watchdog1.$name = "CONFIG_WATCHDOG_0";
 
@@ -93,16 +104,10 @@ GPIO1.gpioPin.$suggestSolution         = "boosterpack.39";
 GPIO2.gpioPin.$suggestSolution         = "boosterpack.40";
 GPIO3.gpioPin.$suggestSolution         = "boosterpack.13";
 GPIO4.gpioPin.$suggestSolution         = "boosterpack.12";
-I2C1.i2c.$suggestSolution              = "I2C0";
-I2C1.i2c.sdaPin.$suggestSolution       = "boosterpack.10";
-I2C1.i2c.sclPin.$suggestSolution       = "boosterpack.9";
 SPI1.spi.$suggestSolution              = "SSI0";
 SPI1.spi.sclkPin.$suggestSolution      = "boosterpack.7";
 SPI1.spi.misoPin.$suggestSolution      = "boosterpack.14";
 SPI1.spi.mosiPin.$suggestSolution      = "boosterpack.15";
 SPI1.spi.dmaRxChannel.$suggestSolution = "DMA_CH3";
 SPI1.spi.dmaTxChannel.$suggestSolution = "DMA_CH4";
-UART1.uart.$suggestSolution            = "UART0";
-UART1.uart.txPin.$suggestSolution      = "boosterpack.4";
-UART1.uart.rxPin.$suggestSolution      = "boosterpack.3";
 Watchdog1.watchdog.$suggestSolution    = "WDT0";
