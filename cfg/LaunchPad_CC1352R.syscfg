@@ -40,8 +40,7 @@ CCFG.ccfgTemplate.$name       = "ti_devices_CCFGTemplate0";
 
 custom.prop8                                                      = ["custom868"];
 custom.radioConfigcustom868.$name                                 = "ti_devices_radioconfig_settings_prop0";
-custom.radioConfigcustom868.phyType868                            = "2gfsk200kbps154g";
-custom.radioConfigcustom868.carrierFrequency                      = 868.0000;
+custom.radioConfigcustom868.phyType868                            = "2gfsk50kbps154g";
 custom.radioConfigcustom868.codeExportConfig.$name                = "ti_devices_radioconfig_code_export_param0";
 custom.radioConfigcustom868.codeExportConfig.symGenMethod         = "Custom";
 custom.radioConfigcustom868.codeExportConfig.cmdPropRadioDivSetup = "rf_cmd_prop_radio_div_setup";
