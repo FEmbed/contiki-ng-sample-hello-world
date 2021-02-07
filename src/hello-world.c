@@ -47,17 +47,28 @@ AUTOSTART_PROCESSES(&hello_world_process);
 PROCESS_THREAD(hello_world_process, ev, data)
 {
   static struct etimer timer;
+  static int led_state = 0;
 
   PROCESS_BEGIN();
 
   /* Setup a periodic timer that expires after 10 seconds. */
-  etimer_set(&timer, CLOCK_SECOND * 10);
+  etimer_set(&timer, CLOCK_SECOND * 1);
 
   while(1) {
 
     /* Wait for the periodic timer to expire and then restart the timer. */
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
     etimer_reset(&timer);
+    if(led_state == 0)
+    {
+      leds_on(LEDS_CONF_GREEN);
+      led_state = 1;
+    }
+    else
+    {
+      leds_off(LEDS_CONF_GREEN);
+      led_state = 0;
+    }
   }
 
   PROCESS_END();
